@@ -1,0 +1,382 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* Estilo para el contenido del sitio */
+.contenedor{
+	width: 1583px;
+	height: auto;
+	background-color: #FFFFFF;
+	margin: auto;
+}
+/* Estilo para el encabezado */
+header{
+	width: 100%;
+	height: 230px;
+	background-color: #FFFFFF;
+}
+
+#cont-sup{
+	width: 1583px;
+	height: 60px;
+	background-color: #000000;
+}
+
+/* Estilo para el contenido del slider */
+.slider{
+	width: 95%;
+	height: 800px;
+	margin-top: 0px;
+	padding-top: 0px;
+	margin:auto;
+	overflow: hidden;
+}
+/* Estilo para el pie de pagina del sitio */
+#footer{
+	width: 100%;
+	height: 300px;
+	background-color: #FFF;
+	border-color: #000000;
+	border-radius: 5px;
+	padding:30px;
+}
+/* Estilo para la imagen del pie de pagina */
+#footer-logo{
+	width: 30%;
+	height: 270px;
+	background-image: url(../img/Monte%20Carlo/logo_formula1_nuevo.jpg);
+	background-size: cover;
+	float:left;
+	margin-left: 0%;
+	margin-top: 0px;
+	
+}
+#footer-redes{
+	width:30%;
+	height: 40%;
+	float:left;
+	margin-top:70px;
+	margin-left:30%;
+	
+	
+}/* Estilo para la imagen de la red del pie de pagina */
+#facebook-icon2{
+	width:75px;
+	height: 75px;
+	background-image: url(../img/Monte%20Carlo/1000px-F_icon.svg.png);
+	float:left;
+	background-size: cover;
+	margin-left: 7%;
+	
+}/* Estilo para la imagen de la red del pie de pagina */
+#twitter-icon2{
+	width:75px;
+	height: 75px;
+	background-image: url(../img/Monte%20Carlo/twitter-logo_318-40459.jpg);
+	float:left;
+    background-size: cover;
+	margin-left: 7%;
+}/* Estilo para la imagen de la red del pie de pagina */
+#youtube-icon2{
+	width:75px;
+	height: 75px;
+	background-image: url(../img/Monte%20Carlo/Youtube-logo-2017.png);
+	float:left;
+    background-size: cover;
+	margin-left: 7%;
+}
+/* Estilo para la caja del encabezado */
+#header-box{
+	width: 100%;
+	height: 100px;
+	margin-left: 3%;
+	float: left;
+}
+/* Estilo para la imagen del header */
+#caja-logo{ 
+	width: 30%;
+	height: 270px;
+	background-image: url(../img/Monte%20Carlo/logo_formula1_nuevo.jpg);
+	background-size: cover;
+	float:left;
+	margin-left: 0%;
+}
+
+#caja-redes{
+	width: 50%;
+	height: 100px;
+	float:left;
+	margin-left: 25%;
+	margin-top: 20px;
+}
+/* Estilo para el menu */
+#caja-menu{ 
+	width: 60%;
+	height: 27px;
+	float: left;
+	margin-left: 2%;
+	margin-top: 45px;
+}
+/* Encabezado */
+header {
+	width:100%;
+}
+ 
+header nav {
+	width:90%;
+	max-width:1000px;
+	margin:20px auto;
+}
+ 
+.menu_bar {
+	display:none;
+}
+ 
+header nav ul {
+	overflow:hidden;
+	list-style:none;
+}
+ 
+header nav ul li {
+	float:left;
+}
+ 
+header nav ul li a {
+	display:block;
+	text-decoration: none;
+	padding: 20px;
+	letter-spacing: 0.04em;
+	font-family: Verdana, Geneva, sans-serif, cursive;
+	font-size: 16px;
+	font-weight: 700;
+	color:#000;
+}
+ 
+header nav ul li span {
+	margin-right:10px;
+}
+ 
+header nav ul li a:hover {
+	color: #a7250d;
+	border-radius: 20%;
+	border-bottom:1px solid #000000;
+	border-right: 1px solid #000000;
+	border-left: 1px solid #000000;
+	border-top: 1px solid #000000;
+}
+ 
+.article{
+	width: 100%;
+	height: 120px;
+	background-color: #FFFFFF;
+}
+
+.article2{
+	width: 100%;
+	height: 75px;
+	background-color: #f4f6f9;
+}
+/* DEclaracion estilo de letra */
+#titles{
+	width: 90%;
+	height: 100px;
+	Color: Black;
+	text-decoration: none;
+	padding: 20px;
+	letter-spacing: 0.04em;
+	font-family: Verdana, Geneva, sans-serif, cursive;
+	font-size: 40px;
+	font-weight: 700;
+	color:#000;
+	margin-left: 5%;
+	margin-top: 10px;
+	text-align:center;
+}
+/* DEclaracion estilo de letra */
+#our-band{
+	width: 90%;
+	height: 100px;
+	Color: Black;
+	text-decoration: none;
+	padding: 20px;
+	letter-spacing: 0.04em;
+	font-family: Verdana, Geneva, sans-serif, cursive;
+	font-size: 30px;
+	font-weight: 700;
+	color:#000;
+	margin-left: 5%;
+	margin-top: 10px;
+	text-align:center;
+}
+/* DEclaracion estilo de letra */
+#our-band1{
+	width: 40%;
+	height: 50px;
+	Color: Black;
+	text-decoration: none;
+	padding: 20px;
+	letter-spacing: 0.04em;
+	font-family: Verdana, Geneva, sans-serif, cursive;
+	font-size: 30px;
+	font-weight: 700;
+	color:#000;
+	margin-left: 5%;
+	margin-top: 10px;
+	text-align:center;
+}
+/* DEclaracion estilo de imagen */
+
+#imagen1{
+	
+	float: up;
+	float: right;
+	background-size: cover;
+	margin-left: 0%;
+	margin-top: 0.5%;
+	width: 50%;
+	height: 500px;
+	border-top: medium;
+	background-image: url(../img/Monte%20Carlo/fig1.jpg);
+	background-size:cover;
+	
+}
+/* DEclaracion estilo de imagen */
+
+#imagen2{
+	
+	float: left;
+	background-size: cover;
+	width: 50%;
+	height: 500px;
+	background-image: url(../img/Monte%20Carlo/001_small.jpg);
+	background-size:cover;
+	
+}
+/* DEclaracion cajas de texto e imagen */
+.article3{
+	width: 100%;
+	height: 450px;
+	background-color: #FFFFFF;
+	padding: 30px;
+}/* DEclaracion cajas de texto e imagen */
+.article4{
+	width: 100%;
+	height: 650px;
+	background-color: #f4f6f9;
+	padding: 10px;
+}
+/* DEclaracion cajas de texto e imagen */
+.article5{
+	width: 100%;
+	height: 450px;
+	background-color: #FFFFFF;
+}
+
+/* DEclaracion cajas de texto e imagen */
+.article6{
+	width: 100%;
+	height: 450px;
+	background-color: #f4f6f9;
+}
+
+
+/* DEclaracion pie de pagina */
+#footer{
+	width: 1583px;
+	height: 300px;
+	background-color: #FFF;
+	padding:30px;
+}
+
+
+.number{
+	width: 157px;
+	height: 27px;
+	background-color: #FFFFFF;
+	margin-top:  10px;
+}
+
+.menu_bar{
+	display: none;
+}
+
+@media screen and (max-width:800px){
+	
+	header nav {
+		width:80%;
+		height:100%;
+		left:-100%;
+		margin:0;
+		background-color: white;
+	}
+ 
+	header nav ul li {
+		display:block;
+		float:none;
+		border-bottom:1px solid rgba(255,255,255, .3);
+	}
+ 
+	.menu_bar {
+		display:block;
+		width:100%;
+		
+	}
+ 
+	.menu_bar .bt-menu {
+		display:block;
+		padding:20px;
+		
+		color:black;
+		text-decoration:none;
+		font-weight: bold;
+		font-size:25px;
+		-webkit-box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		box-sizing:border-box;
+		font-family: 'Rock Salt', cursive;
+		text-align: left;
+	}
+ 
+	.menu_bar span {
+		float:right;
+		font-size:40px;
+	}
+	
+	#caja-logo{
+		display: none;
+	}
+}
+
+/* Estilo para distribuir contenido en telefonos moviles: */
+[class*="col-"] {
+    width: 100%;
+}
+@media only screen and (min-width: 600px) {
+    /* Estilo para distribuir contenido en tablets: */
+    .col-s-1 {width: 8.33%;}
+    .col-s-2 {width: 16.66%;}
+    .col-s-3 {width: 25%;}
+    .col-s-4 {width: 33.33%;}
+    .col-s-5 {width: 41.66%;}
+    .col-s-6 {width: 50%;}
+    .col-s-7 {width: 58.33%;}
+    .col-s-8 {width: 66.66%;}
+    .col-s-9 {width: 75%;}
+    .col-s-10 {width: 83.33%;}
+    .col-s-11 {width: 91.66%;}
+    .col-s-12 {width: 100%;}
+}
+@media only screen and (min-width: 768px) {
+    /* Estilo para distribuir contenido en pc de escritorio: */
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+}
