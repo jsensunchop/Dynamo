@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamo</title>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+</head>
+<body>
+    <div class="divlogin">
+        <div class="container">
+                <img src="../registro/assets/img/logo.png" class="avatar" alt="Avatar Image">
+            <div class="divcont">
+                
+                <h3>{{ title }}</h3>
+                <form @submit.prevent="sendForm()">
+                    <input type="email" :class="{ 'error':validateEmail}" placeholder="Email" v-model="form.email">
+                    <input type="password" v-if ="form.type!=2":class="{ 'error':validatePassword}" placeholder="Contraseña" v-model="form.password">
+                    <input type="password" v-if ="form.type==1":class="{ 'error':validatePassword}" placeholder="Repetir Contraseña" v-model="form.password2">
+                    <button>Iniciar Sesion</button>
+                    <a href="javascript:void(0)"@click="form.type=2" v-if ="form.type!=2">Recuperar Contraseña</a>
+                    <a href="javascript:void(0)" @click="form.type=1" v-if ="form.type!=1">Registrarme</a>
+                    <a href="javascript:void(0)" @click="form.type=0" v-if ="form.type!=0">Iniciar Sesion</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/sesion.js"></script>
+</body>
+</html>
