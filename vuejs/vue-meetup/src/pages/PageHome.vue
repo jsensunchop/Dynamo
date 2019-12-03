@@ -187,7 +187,20 @@
 </template>
 
 <script>
+import axios from "axios"
   export default {
+    data (){
+      return{
+        categories: []
+      }
+    },
+    created (){
+      axios.get('/api/v1/categories')
+      .then(res => {
+        debugger
+        this.categories = res.data
+      })
+    }
   }
 </script>
 

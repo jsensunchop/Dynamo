@@ -6,15 +6,15 @@ const bcrypt = require('bcrypt')
 const config = require('../config/dev')
 
 const userSchema = new Schema({
-  avatar: String,
+  //avatar: String,
   email: { type: String,
            required: 'Email is Required',
            lowercase: true,
            unique: true,
            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/]},
-  name: { type: String,
-          required: true,
-          min: [6, 'Too short, min is 6 characters']},
+  //name: { type: String,
+    //      required: true,
+    //      min: [6, 'Too short, min is 6 characters']},
   username: { type: String,
           required: true,
           min: [6, 'Too short, min is 6 characters']},

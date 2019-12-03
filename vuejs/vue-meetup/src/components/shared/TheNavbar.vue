@@ -1,8 +1,8 @@
 <template>
   <nav class="navbar is-spaced" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
-        <h1 class="title is-4">Dynamo-BookStore</h1>
+      <a class="navbar-item" >
+        <h1 class="title is-4">Alexandria</h1>
       </a>
       <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
         <span aria-hidden="true"></span>
@@ -47,12 +47,12 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <a class="button is-primary">
+            <router-link :to="{name: 'PageRegister'}" class="button is-primary">
               <strong>Registrarse</strong>
-            </a>
-            <a class="button is-light">
+            </router-link>
+            <router-link :to="{name: 'PageLogin'}" class="button is-light">
               Iniciar Sesion
-            </a>
+            </router-link>
           </div>
         </div>
       </div>

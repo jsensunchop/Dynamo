@@ -32,8 +32,8 @@ module.exports = {
   "meetups": [
      {
       "_id": meetup1Id,
-      "location": "Bratislava, SK",
-      "processedLocation": "bratislavask",
+      "location": "Bogota, COL",
+      "processedLocation": "Bogotham",
       "title": "Night in the City",
       "image": "https://images.unsplash.com/photo-1519999482648-25049ddd37b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2452&q=80",
       "description": "Some description of this event. I dont know what to talk about",
