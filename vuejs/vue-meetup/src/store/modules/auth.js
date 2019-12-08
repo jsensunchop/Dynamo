@@ -37,16 +37,7 @@ export default  {
         registerUser (context, userData) {
             return axios.post('/api/v1/users/register', userData)
         },
-        logout ({commit}){
-            return axios.post('/api/v1/users/logout')
-                .then(() =>{
-                    commit('setAuthUser', null)
-                    return true
-                })
-                .catch(err => {
-                    return err
-                })
-        },
+        
         getAuthUser ({commit, getters}) {
             const authUser = getters['authUser']
             const token = localStorage.getItem('meetuper-jwt')
