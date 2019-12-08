@@ -1,5 +1,9 @@
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-    headers: {'authorization': `Bearer ${localStorage.getItem('vue-meetup')}`}
+    //request timeout
+    timeout: 3000,
+    headers: {'authorization': `Bearer ${(localStorage.getItem('vue-meetup') || '')}`}
 })
+
+export default axiosInstance
