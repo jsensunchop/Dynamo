@@ -1,5 +1,6 @@
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
+import axiosInstance from '@/services/axios'
 
 function checkTokenValidity (token) {
     if(token) {
@@ -55,10 +56,10 @@ export default  {
             const config = {
                 headers: {
                     'Cache-Control':'no-cache',
-                    'authorization': `Bearer ${token}`
+                    
                 }
             }
-            return axios.get('/api/v1/users/me', config)
+            return axiosInstance.get('/api/v1/users/me', config)
                 .then((res) => {
                     const user=res.data
                     localStorage.setItem('meetuper-jwt', user.token)
