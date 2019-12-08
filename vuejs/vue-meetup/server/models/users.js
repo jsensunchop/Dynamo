@@ -12,9 +12,9 @@ const userSchema = new Schema({
            lowercase: true,
            unique: true,
            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/]},
-  //name: { type: String,
-    //      required: true,
-    //      min: [6, 'Too short, min is 6 characters']},
+  name: { type: String,
+          required: true,
+          min: [6, 'Too short, min is 6 characters']},
   username: { type: String,
           required: true,
           min: [6, 'Too short, min is 6 characters']},
@@ -54,5 +54,24 @@ userSchema.methods.comparePassword = function(candidatePassword, callback){
    });
 }
 
+userSchema.methods.generateJWT= function (){
+   return jwt.sign({
+      email: this.email,
+      id: this._id,
+   }, config.JWT_SECRET, {expiresIn: '1h'})
+}
+
+userSchema.methods.toAuthJSON = function(){
+   return {
+      _id: this._id,
+      avatar: this.avatar,
+      name: this.name,
+      username: this.username,
+      info: this.info,
+      email: this.email,
+      joinedMeetups: this.joinedMeetups, 
+      token: this.generateJWT()
+   };
+}
 
 module.exports = mongoose.model('User', userSchema );

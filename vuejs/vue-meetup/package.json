@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "npm run start --prefix server"
   },
   "dependencies": {
     "algoliasearch": "^3.32.0",
@@ -40,7 +41,7 @@
     "vue2-timepicker": "^0.1.4",
     "vuejs-datepicker": "^1.5.4",
     "vuelidate": "^0.7.4",
-    "vuex": "^3.1.0"
+    "vuex": "^3.1.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",
@@ -63,7 +64,8 @@
       "eslint:recommended"
     ],
     "rules": {
-      "no-debugger": 0
+      "no-debugger": 0,
+      "console": 0
     },
     "parserOptions": {
       "parser": "babel-eslint"
