@@ -98,7 +98,7 @@ exports.login = function (req, res, next) {
       return res.json(passportUser.toAuthJSON())
     } else {
       return res.status(422).send({errors: {
-        'authentication': 'Ooops, smth wnet wrong'
+        'authentication': 'Vaya, algo extraño ha ocurrido'
       }})
     }
   })(req, res, next)
