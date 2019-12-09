@@ -30,7 +30,8 @@ exports.register = function(req, res) {
   if(!registerData.email) {
     return res.status(422).json({
       errors:{
-        email: 'is required'
+        email: 'is required',
+        message: 'Ingrese un Email valido'
       }
     })
   }
@@ -38,7 +39,8 @@ exports.register = function(req, res) {
   if(!registerData.password) {
     return res.status(422).json({
       errors:{
-        password: 'is required'
+        password: 'is required',
+        message: 'Ingrese una contraseña valida'
       }
     })
   }
@@ -46,7 +48,8 @@ exports.register = function(req, res) {
   if(registerData.password !== registerData.passwordConfirmation) {
     return res.status(422).json({
       errors:{
-        password: 'is not the same as confirmation pass'
+        password: 'is not the same as confirmation pass',
+        message: 'Las contraseñas no coinciden'
       }
     })
   }
@@ -71,7 +74,8 @@ exports.login = function (req, res, next) {
   if(!email) {
     return res.status(422).json({
       errors:{
-        email: 'is required'
+        email: 'is required',
+        message: 'Ingrese un Email valido'
       }
     })
   }
@@ -79,7 +83,8 @@ exports.login = function (req, res, next) {
   if(!password) {
     return res.status(422).json({
       errors:{
-        password: 'is required'
+        password: 'is required',
+        message: 'Ingrese una contraseña valida'
       }
     })
   }

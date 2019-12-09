@@ -51,7 +51,7 @@ export default  {
                     return err
                 })
             */
-           return new Promise ((resolve, reject) => {
+           return new Promise ((resolve) => {
                localStorage.removeItem('meetuper-jwt')
                commit('setAuthUser', null)
                resolve(true)
