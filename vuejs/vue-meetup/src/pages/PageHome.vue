@@ -1,12 +1,13 @@
 <template>
   <div>
     <AppHero />
-    <div class="container">
+    <div v-if="pageLoader_isDataLoaded" class="container">
       <section class="section">
       <div class="m-b-lg">
         <h1 class="title is-inline">Books For You</h1>
         <AppDropdown />
-        <button class="button is-primary is-pulled-right m-r-sm">Publicaciones Recientes</button>
+        <router-link v-if="user" :to="{name: 'PageMeetupCreate'}" 
+                     class="button is-primary is-pulled-right m-r-sm">Crear Meetup</router-link>
         <router-link :to="{name: 'PageMeetupFind'}" 
                      class="button is-primary is-pulled-right m-r-sm">Todas las Publicaciones
         </router-link>
@@ -25,6 +26,9 @@
           </div>
         </div>
       </section>
+      </div>
+    <div v-else class="container">
+      <AppSpinner />
     </div>
   </div>
 </template>
@@ -34,37 +38,33 @@ import axios from "axios"
 import CategoryItem from '@/components/CategoryItem'
 import MeetupItem from '@/components/MeetupItem'
 import { mapActions, mapState, mapGetters } from 'vuex'
+import pageLoader from '@/mixins/pageLoader'
   export default {
     components: {
       CategoryItem,
       MeetupItem
     },
-    data(){
-      return {
-        meetups: [],
-        categories: []
-      }
-    },
+     mixins: [pageLoader],
     computed: {
-      meetups (){
-        return this.$store.getters['meetups']
-      },
-      categories (){
-        return this.$store.getters['categories']
-      }
+      ...mapGetters({
+        'user': 'auth/authUser'
+      }),
+      ...mapState({
+        meetups: state => state.meetups.items,
+        categories: state => state.categories.items
+      })
     },
-    created (){
-      //this.$store.dispatch('fetchMeetups')
-      //this.$store.dispatch('fetchCategories')
-      axios.get('/api/v1/meetups')
-       .then(res => {
-         this.meetups=res.data
-       })
-      
-      axios.get('/api/v1/categories')
-       .then(res => {
-         this.categories=res.data
-       })
+    created () {
+      Promise.all([this.fetchMeetups(), this.fetchCategories()])
+        .then(() => this.pageLoader_resolveData())
+        .catch((err) => {
+          console.error(err)
+          this.pageLoader_resolveData()
+        })
+    },
+    methods: {
+      ...mapActions('meetups', ['fetchMeetups']),
+      ...mapActions('categories', ['fetchCategories'])
     }
   }
 </script>

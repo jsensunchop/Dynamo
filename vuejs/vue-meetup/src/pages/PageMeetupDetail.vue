@@ -26,7 +26,7 @@
         </div>
         <div class="is-pulled-right">
           <!-- We will handle this later (: -->
-          <button class="button is-danger">Leave Meetup</button>
+          <button class="button is-danger">Leave Group</button>
         </div>
       </div>
     </section>
@@ -36,8 +36,8 @@
           <div class="column is-3">
             <aside class="is-medium menu">
               <div class="meetup-side-box">
-                  <p><b>Date</b></p>
                 <div class="meetup-side-box-date m-b-sm">
+                  <p><b>Date</b></p>
                   <p>{{meetup.startDate | formatDate}}</p>
                 </div>
                 <div class="meetup-side-box-date m-b-sm">
@@ -54,17 +54,14 @@
                 </div>
               </div>
               <div class="meetup-side-box-map">
-                <img src="https://cnet2.cbsistatic.com/img/
-                H_zPLL8-QTZOLxJvgHQ1Jkz0EgY=/830x467/2013/07/10/
-                f0bcef02-67c2-11e3-a665-14feb5ca9861/maps_routemap.png" class="
-                venueMap-mapImg span--100" alt="Location image of meetup venue">
+                <img src="https://cnet2.cbsistatic.com/img/H_zPLL8-QTZOLxJvgHQ1Jkz0EgY=/830x467/2013/07/10/f0bcef02-67c2-11e3-a665-14feb5ca9861/maps_routemap.png" class="venueMap-mapImg span--100" alt="Location image of meetup venue">
               </div>
               <!-- Threads Start -->
               <p class="menu-label">
                 Threads
               </p>
               <ul>
-                <li v-for="thread in orderedThreads" :key="thread._id">{{thread.title}}</li>
+                <li v-for="thread in threads" :key="thread._id">{{thread.title}}</li>
               </ul>
               <p class="menu-label">
                 Who is Going
@@ -84,71 +81,80 @@
             <div class="content is-medium">
               <h3 class="title is-3">About the Meetup</h3>
               <p>{{meetup.description}}</p>
-              <button class="button is-primary">Join In</button>        
+              <!-- Join Meetup, We will handle it later (: -->
+              <button class="button is-primary">Join In</button>
+              <!-- Not logged In Case, handle it later (: -->
+              <!-- <button :disabled="true"
+                      class="button is-warning">You need authenticate in order to join</button> -->
             </div>
+            <!-- Thread List START -->
             <div class="content is-medium">
-                <h3 class="title is-3">Threads</h3>
-                <div v-for="thread in threads" :key="thread._id" class="box"></div>
-                    <h4 id="const" class="title is-3">{{thread.title}}</h4>
-                    <form class="post-create">
-                        <div class="field">
-                            <textarea class="textarea textarea-post"
-                                placeholder="Write a post"
-                                rows="1"></textarea>
-                            <button :disabled="true" class="button is-primary m-t-sm">Send</button>
-                        </div>
-                    </form>
-
-                    <article v-for="post in thread.posts" :key="post._id" class="media post-item">
-                        <figure class="media-left is-rounded user-image">
-                            <p class="image is-32x32">
-                                <img class="is-rounded" :src="post.user.avatar">
-                            </p>
-                        </figure>
-                        <div class="media-content">
-                            <div class="content is-medium">
-                                <div class="post content">
-                                    <strong class="author">{{post.user.name}}</strong>
-                                    {{''}}
-                                    <small class="post-time">{{post.updatedAt | formatDate('LLL')}}</small>
-                                    <br>
-                                    <p class="post-content-message">{{post.text}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+              <h3 class="title is-3">Threads</h3>
+              <div v-for="thread in threads" :key="thread._id" class="box">
+                <!-- Thread title -->
+                <h4 id="const" class="title is-3">{{thread.title}}</h4>
+                <!-- Create new post, handle later -->
+                <form class="post-create">
+                  <div class="field">
+                    <textarea class="textarea textarea-post"
+                              placeholder="Write a post"
+                              rows="1"></textarea>
+                    <button :disabled="true" class="button is-primary m-t-sm">Send</button>
+                  </div>
+                </form>
+                <!-- Create new post END, handle later -->
+                <!-- Posts START -->
+                <article v-for="post in thread.posts" :key="post._id" class="media post-item">
+                  <figure class="media-left is-rounded user-image">
+                    <p class="image is-32x32">
+                      <img class="is-rounded" :src="post.user.avatar">
+                    </p>
+                  </figure>
+                  <div class="media-content">
+                    <div class="content is-medium">
+                      <div class="post-content">
+                        <!-- Post User Name -->
+                        <strong class="author">{{post.user.name}}</strong>
+                        {{' '}}
+                        <!-- Post Updated at -->
+                        <small class="post-time">{{post.updatedAt | formatDate('LLL')}}</small>
+                        <br>
+                        <p class="post-content-message">{{post.text}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+                <!-- Posts END -->
+              </div>
             </div>
-        </div>    
+            <!-- Thread List END -->
+          </div>
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-  import axios from 'axios'
+  import { mapActions, mapState } from 'vuex'
   export default {
-    data(){
-        return {
-            meetup:{},
-            thread: []
-        }
+    computed: {
+      ...mapState({
+        meetup: state => state.meetups.item,
+        threads: state => state.threads.items
+      }),
+      meetupCreator () {
+        return this.meetup.meetupCreator || {}
+      }
     },
     created () {
       const meetupId = this.$route.params.id
-      axios.get(`/api/v1/meetups/${meetupId}`)
-        .then(res => {
-            this.threads = res.data
-        })
-      axios.get(`/api/v1/threads?meetupId=${meetupId}`)
-        .then(res => {
-            this.threads = res.data
-        })
+      this.fetchMeetupById(meetupId)
+      this.fetchThreads(meetupId)
     },
-    computed: {
-        meetupCreator () {
-            return this.meetup.meetupCreator || ''
-        }
+    methods: {
+      ...mapActions('meetups', ['fetchMeetupById']),
+      ...mapActions('threads', ['fetchThreads'])
     }
   }
 </script>
@@ -223,4 +229,48 @@
     margin: inherit;
   }
   .footer {background-color: white;}
+  // Post Create Input START
+  .textarea-post {
+    padding-bottom: 30px;
+  }
+  .post-create {
+    margin-bottom: 15px;
+  }
+  // Post Create END
+  // Thread List START
+  .content {
+    figure {
+      margin-bottom: 0;
+    }
+  }
+  .media-content-threads {
+    background-color: #f1f1f1;
+    padding: 3px 20px;
+    border-radius: 10px;
+    margin-right: 40px;
+    width: 100px;
+  }
+  .media-left.user-image {
+    margin: 0;
+    margin-right: 15px;
+  }
+  .post-item {
+  }
+  .media + .media {
+    border: none;
+    margin-top: 0;
+  }
+  .post-content {
+    margin: 0;
+    &-message {
+      font-size: 16px;
+    }
+    .author {
+      font-size: 18px;
+    }
+    .post-time {
+      font-size: 16px;
+    }
+  }
+  // Thread List END
 </style>

@@ -1,9 +1,10 @@
 <template>
   <div v-if="isAuthResolved" id="app">
     <TheNavbar />
-    <router-view/>
+    <div class="page-wrapper">
+      <router-view />
+    </div>
     <TheFooter />
-    
   </div>
 </template>
 
@@ -20,26 +21,22 @@ export default {
     isAuthResolved () {
       return this.$store.state.auth.isAuthResolved
     }
-  },
-  /*
-  created(){
-    this.$store.dispatch('auth/getAuthUser')
   }
-  */
 }
 </script>
 
 <style lang="scss">
 @import 'assets/css/spacing.css';
 @import '~bulma/bulma.sass';
-
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
-
+.page-wrapper {
+  min-height: 55vh;
+}
 .bold {
   font-weight: bold;
 }
@@ -57,6 +54,7 @@ export default {
 }
 .hero-bg {
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+  //url('https://images.unsplash.com/photo-1531263060782-b024de9b9793?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80');
   url('./assets/biblioteca.jpg');
   background-size: cover;
   background-repeat: no-repeat;
