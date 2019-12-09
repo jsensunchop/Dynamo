@@ -98,7 +98,7 @@ exports.login = function (req, res, next) {
       return res.json(passportUser.toAuthJSON())
     } else {
       return res.status(422).send({errors: {
-        'authentication': 'Vaya, algo extraño ha ocurrido'
+        'message': 'E-mail o contraseña incorrectos'
       }})
     }
   })(req, res, next)
