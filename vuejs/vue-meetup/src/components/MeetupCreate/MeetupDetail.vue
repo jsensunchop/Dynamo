@@ -1,52 +1,58 @@
 <template>
-  <form>
+  <form @input="emitFormData">
     <div class="field">
-      <label class="title m-b-sm">Choose Title</label>
+      <label class="title m-b-sm">Elija un titulo</label>
       <input v-model="form.title"
+             @blur="$v.form.title.$touch()"
              class="input"
              type="text"
              placeholder="Enter Title">
       <div v-if="$v.form.title.$error">
-        <span v-if="!$v.form.title.required" class="help is-danger">Title is required</span>
+        <span v-if="!$v.form.title.required" class="help is-danger">Debe elegir un titulo</span>
       </div>
     </div>
     <div class="field">
-      <label class="title m-b-sm">Starts At</label>
-      <input v-model="form.startsAt"
+      <label class="title m-b-sm">Comienza el</label>
+      <input v-model="form.startDate"
+             @blur="$v.form.startDate.$touch()"
              class="input"
              type="text"
              placeholder="Starts At">
       <div v-if="$v.form.startDate.$error">
-        <span v-if="!$v.form.startDate.required" class="help is-danger">Starts at is required</span>
+        <span v-if="!$v.form.startDate.required" class="help is-danger">Debe elegir una fecha de inicio</span>
       </div>
     </div>
     <div class="field">
-      <label class="title m-b-sm">From</label>
+      <label class="title m-b-sm">Desde</label>
       <input v-model="form.timeFrom"
+             @blur="$v.form.timeFrom.$touch()"
              class="input"
              type="text"
              placeholder="Time From">
     </div>
     <div class="field">
-      <label class="title m-b-sm">To</label>
+      <label class="title m-b-sm">Hasta</label>
       <input v-model="form.timeTo"
+             @blur="$v.form.timeTo.$touch()"
              class="input"
              type="text"
              placeholder="Time to">
     </div>
     <div class="field">
-      <label class="title m-b-sm">Please Choose the Category.</label>
+      <label class="title m-b-sm">Porfavor elija una categoria.</label>
       <div class="m-b-lg">
         <div class="select">
           <!-- TODO: Get Here Categories -->
-          <!-- <select v-model="form.category">
+          <select v-model="form.category" 
+                  @blur="$v.form.category.$touch()"
+                  @change="emitFromData">
             <option v-for="category of categories"
                     :value="category"
                     :key="category.id">{{category.name}}</option>
-          </select> -->
+          </select>
         </div>
         <div v-if="$v.form.category.$error">
-          <span v-if="!$v.form.category.required" class="help is-danger">Category is required</span>
+          <span v-if="!$v.form.category.required" class="help is-danger">Debe elegir una categoria</span>
         </div>
       </div>
     </div>
@@ -67,6 +73,11 @@
         }
       }
     },
+    computed: {
+      categories(){
+        return this.$store.state.categories.items
+      }
+    },
     validations: {
       form: {
         title: { required },
@@ -74,6 +85,16 @@
         category: { required },
         timeTo: { required },
         timeFrom: { required }
+      }
+    },
+    computed: {
+      categories () {
+        return this.$store.state.categories.items
+      }
+    },
+    methods: {
+      emitFormData (){
+        this.$emit('stepUpdated', this.form)
       }
     }
   }

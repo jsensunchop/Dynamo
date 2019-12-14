@@ -5,57 +5,57 @@
     <div class="content">
       <div >
         <span class="result-title">
-        Location
+        Ubicación
         </span>
-        <p>Some Location</p>
+        <p>{{meetupToCreate.location}}</p>
       </div>
       <div>
         <span class="result-title">
-        Title
+        Titulo del Meetup
         </span>
-        <p>Some Title</p>
+        <p>{{meetupToCreate.title}}</p>
       </div>
       <div>
         <span class="result-title">
-        Start Date
+        Fecha de Inicio
         </span>
-        <p>Some Start Date</p>
+        <p>{{meetupToCreate.startDate}}</p>
       </div>
       <div>
         <span class="result-title">
-        From
+        Desde
         </span>
-        <p>Some Time From</p>
+        <p>{{meetupToCreate.timeFrom}}</p>
       </div>
       <div>
         <span class="result-title">
-        To
+        Hasta
         </span>
-        <p>Some Time To</p>
+        <p>{{meetupToCreate.timeTo}}</p>
       </div>
       <div>
         <span class="result-title">
-        Category
+        Categoria
         </span>
-        <p>Some Category</p>
+        <p>{{meetupToCreate.category.name}}</p>
       </div>
       <div>
         <span class="result-title">
         Image
         </span>
-        <p>Some Event</p>
+        <p>{{meetupToCreate.image}}</p>
       </div>
       <div>
         <span class="result-title">
-        Short Info
+        Info
         </span>
-        <p>Some Info</p>
+        <p>{{meetupToCreate.shortInfo}}</p>
       </div>
       <div>
         <span class="result-title">
-        Description
+        Descripción
         </span>
-        <p>Some Description</p>
+        <p>{{meetupToCreate.description || "Indefinido"}}</p>
       </div>
     </div>
   </div>
@@ -63,7 +63,15 @@
 
 <script>
   export default {
-    validations: {}
+    props: {
+      meetupToCreate: {
+        required: true,
+        type: Object
+      }
+    },
+    validations: {
+
+    }
   }
 </script>
 

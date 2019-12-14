@@ -4,12 +4,12 @@
     <div v-if="pageLoader_isDataLoaded" class="container">
       <section class="section">
       <div class="m-b-lg">
-        <h1 class="title is-inline">Books For You</h1>
+        <h1 class="title is-inline">Reuniones cerca de ti</h1>
         <AppDropdown />
         <router-link v-if="user" :to="{name: 'PageMeetupCreate'}" 
                      class="button is-primary is-pulled-right m-r-sm">Crear Meetup</router-link>
         <router-link :to="{name: 'PageMeetupFind'}" 
-                     class="button is-primary is-pulled-right m-r-sm">Todas las Publicaciones
+                     class="button is-primary is-pulled-right m-r-sm">Todas las Reuniones
         </router-link>
       </div>
       <div class="row columns is-multiline">
