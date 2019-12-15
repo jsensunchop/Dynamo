@@ -4,19 +4,20 @@
             {{currentStep}} of {{allStepsCount}}
         </div>
         <keep-alive>
-            <component  :is="currentComponent"
-                        @stepUpdated="mergeStepData"
-                        ref="currentComponent"
-                        :meetupToCreate="form" />
+            <component :is="currentComponent"
+                 @stepUpdated="mergeStepData"
+                 ref="currentComponent"
+                 :meetupToCreate="form" />
         </keep-alive>
 
-        <progress class="progress" :value="currentProgress" max="100"> {{currentProgress }}%</progress>
+        <progress class="progress" :value="currentProgress" max="100"> {{currentProgress}}%</progress>
         <div class="controll-btns m-b-md">
             <button v-if="currentStep !== 1"
                     @click="moveToPreviousStep" class="button is-primary m-r-sm">Atras</button>
             <button v-if="currentStep !== allStepsCount"
-                    :disabled="!canProceed"
-                    @click="moveToNextStep" class="button is-primary">Siguiente</button>
+                    @click="moveToNextStep"
+                    :disabled="!canProceed" 
+                    class="button is-primary">Siguiente</button>
             <button v-else
                     @click="moveToNextStep" class="button is-primary">Confirmar</button>        
         </div>
@@ -55,44 +56,45 @@ export default {
             }
         }
     },
-    computed: {
-        allStepsCount(){
-            return this.formSteps.length
-        },
-        currentProgress () {
-            return(100 / this.allStepsCount)* this.currentStep
-        },
-        currentComponent(){
-            return this.formSteps[this.currentStep -1]
-        },
+   computed: {
+      allStepsCount () {
+        return this.formSteps.length
+      },
+      currentProgress () {
+        return (100 / this.allStepsCount) * this.currentStep
+      },
+      currentComponent () {
+        return this.formSteps[this.currentStep - 1]
+      }
     },
     methods: {
-        mergeStepData(step){
-            this.form = {...this.form, ...stepData}
-            this.canProceed = step.isValid    
-        },
-        moveToNextStep(){
-            this.currentStep++
-            this.$nextTick(() => {
-                this.canProceed = !this.$refs['currentComponent'].$v.$invalid
-            })
-        },
-        moveToPreviusStep(){
-            this.currentStep--
-            this.canProceed = true
-        }
+      mergeStepData (step) {
+        this.form = {...this.form, ...step.data}
+        this.canProceed = step.isValid
+      },
+      moveToNextStep () {
+        this.currentStep++
+        // https://vuejs.org/v2/api/#Vue-nextTick
+        // Defer the callback to be executed after the next DOM update cycle.
+        this.$nextTick(() => {
+          this.canProceed = !this.$refs['currentComponent'].$v.$invalid
+        })
+      },
+      moveToPreviousStep () {
+        this.currentStep--
+        this.canProceed = true
+      }
     }
-}
-
+  }
 </script>
 
 <style scoped>
-    .meetup-create-form{
-        box-sizing: border-box;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 840px;
-        padding: 24px 16px 8px;
-        width: 100%;
-    }
+  .meetup-create-form {
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 840px;
+    padding: 24px 16px 8px;
+    width: 100%;
+  }
 </style>

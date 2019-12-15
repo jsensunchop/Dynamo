@@ -6,17 +6,17 @@
              @blur="$v.form.title.$touch()"
              class="input"
              type="text"
-             placeholder="Enter Title">
+             placeholder="Ingrese un titulo">
       <div v-if="$v.form.title.$error">
         <span v-if="!$v.form.title.required" class="help is-danger">Debe elegir un titulo</span>
       </div>
     </div>
     <div class="field">
-      <label class="title m-b-sm">Comienza el</label>
+      <label class="title m-b-sm">Fecha de inicio</label>
       <datepicker @input="setDate"
                   :disabledDates="disabledDates"
-                  :value="new Date()" 
-                  :input-class="'input'"></datepicker>
+                  :input-class="'input'"
+                  :placeholder="new Date | formatDate"></datepicker>
       <div v-if="$v.form.startDate.$error">
         <span v-if="!$v.form.startDate.required" class="help is-danger">Debe elegir una fecha de inicio</span>
       </div>
@@ -64,28 +64,24 @@
   import moment from 'moment'
   export default {
     components: {
-
+      Datepicker
     },
     data () {
       return {
         disabledDates: {
           customPredictor: function(date) {
             const today = new Date()
-            return date < today
+            const yesterday = today.setDate(today.getDate() -1)
+            return date < yesterday
           }
         },
         form: {
           title: null,
-          startDate: null,
+          startDate: new Date(),
           timeTo: null,
           timeFrom: null,
           category: null
         }
-      }
-    },
-    computed: {
-      categories(){
-        return this.$store.state.categories.items
       }
     },
     validations: {
