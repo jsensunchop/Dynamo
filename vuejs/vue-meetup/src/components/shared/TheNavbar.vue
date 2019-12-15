@@ -18,7 +18,7 @@
         </router-link>
 
         <router-link :to="{name: 'PageMeetupFind'}" class="navbar-item">
-          Foros
+          Buscador
         </router-link>
 
         <div class="navbar-item has-dropdown is-hoverable">
@@ -28,17 +28,11 @@
 
           <div class="navbar-dropdown">
             <a class="navbar-item">
-              About
-            </a>
-            <a class="navbar-item">
-              Jobs
-            </a>
-            <a class="navbar-item">
-              Contact
+              Acerca
             </a>
             <hr class="navbar-divider">
             <a class="navbar-item">
-              Report an issue
+              Reporta un error
             </a>
           </div>
         </div>
@@ -47,20 +41,20 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div v-if="user">
-            Welcome {{user.name}}
+            Bienvenido: {{user.name}}
           </div>
         </div>
         <div v-if="user" class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
-            Account
+            Cuenta
           </a>
           <div class="navbar-dropdown">
             <a href="#" class="navbar-item">
-              Profile
+              Perfil
             </a>
             <hr class="navbar-divider">
             <a @click.prevent="logout" class="navbar-item">
-              Logout
+              Cerrar Sesion
             </a>
           </div>
         </div> 

@@ -19,7 +19,7 @@
       </section>
       <section class="section">
         <div>
-          <h1 class="title">Categories</h1>
+          <h1 class="title">Categorias</h1>
           <div class="columns cover is-multiline is-mobile">
             <!--Categorias-->
             <CategoryItem v-for="category in categories" :key="category._id" :category="category"/>

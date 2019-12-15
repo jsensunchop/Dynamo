@@ -18,7 +18,7 @@
             <div class="media-content">
               <div class="content">
                 <p>
-                  Created by <strong>{{meetupCreator.name}}</strong>
+                  Reunion creada por: <strong>{{meetupCreator.name}}</strong>
                 </p>
               </div>
             </div>
@@ -26,7 +26,7 @@
         </div>
         <div class="is-pulled-right">
           <!-- We will handle this later (: -->
-          <button class="button is-danger">Leave Group</button>
+          <button class="button is-danger">Dejar reunion</button>
         </div>
       </div>
     </section>
@@ -37,19 +37,19 @@
             <aside class="is-medium menu">
               <div class="meetup-side-box">
                 <div class="meetup-side-box-date m-b-sm">
-                  <p><b>Date</b></p>
+                  <p><b>Fecha</b></p>
                   <p>{{meetup.startDate | formatDate}}</p>
                 </div>
                 <div class="meetup-side-box-date m-b-sm">
-                  <p><b>Time</b></p>
+                  <p><b>Hora</b></p>
                   <span>{{meetup.timeFrom}}</span> - <span>{{meetup.timeTo}}</span>
                 </div>
                 <div class="meetup-side-box-place m-b-sm">
-                  <p><b>How to find us</b></p>
+                  <p><b>¿Como encontrarnos?</b></p>
                   <p>{{meetup.location}}</p>
                 </div>
                 <div class="meetup-side-box-more-info">
-                  <p><b>Additional Info</b></p>
+                  <p><b>Información Adicional</b></p>
                   <p>{{meetup.shortInfo}}</p>
                 </div>
               </div>
@@ -58,13 +58,13 @@
               </div>
               <!-- Threads Start -->
               <p class="menu-label">
-                Threads
+                Posts
               </p>
               <ul>
                 <li v-for="thread in threads" :key="thread._id">{{thread.title}}</li>
               </ul>
               <p class="menu-label">
-                Who is Going
+                Lista de participantes
               </p>
               <div class="columns is-multiline is-mobile">
                 <!-- Joined People Images Here -->
@@ -79,17 +79,17 @@
           </div>
           <div class="column is-7 is-offset-1">
             <div class="content is-medium">
-              <h3 class="title is-3">About the Meetup</h3>
+              <h3 class="title is-3">Acerca de la reunion</h3>
               <p>{{meetup.description}}</p>
               <!-- Join Meetup, We will handle it later (: -->
-              <button class="button is-primary">Join In</button>
+              <button class="button is-primary">¡Deseo unirme!</button>
               <!-- Not logged In Case, handle it later (: -->
               <!-- <button :disabled="true"
                       class="button is-warning">You need authenticate in order to join</button> -->
             </div>
             <!-- Thread List START -->
             <div class="content is-medium">
-              <h3 class="title is-3">Threads</h3>
+              <h3 class="title is-3">Posts</h3>
               <div v-for="thread in threads" :key="thread._id" class="box">
                 <!-- Thread title -->
                 <h4 id="const" class="title is-3">{{thread.title}}</h4>
@@ -99,7 +99,7 @@
                     <textarea class="textarea textarea-post"
                               placeholder="Write a post"
                               rows="1"></textarea>
-                    <button :disabled="true" class="button is-primary m-t-sm">Send</button>
+                    <button :disabled="true" class="button is-primary m-t-sm">Enviar</button>
                   </div>
                 </form>
                 <!-- Create new post END, handle later -->

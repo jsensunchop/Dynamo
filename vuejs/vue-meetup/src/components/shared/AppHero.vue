@@ -4,10 +4,10 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            Bienvenido a tu tienda de libros
+            Bienvenido a Alexandria!
           </h1>
           <h2 class="subtitle">
-            Lee tus generos favoritos en cualquier momento y GRATIS!
+            Conoce gente cerca de ti para discutir tus libros favoritos
           </h2>
         </div>
       </div>
