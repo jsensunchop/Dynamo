@@ -5,11 +5,14 @@
         </div>
         <keep-alive>
             <MeetupLocation v-if="currentStep === 1"
-                            @stepUpdated="mergeStepData" />
+                            @stepUpdated="mergeStepData"
+                            ref="currentComponent" />
             <MeetupDetail v-if="currentStep === 2" 
-                            @stepUpdated="mergeStepData"/>
+                            @stepUpdated="mergeStepData"
+                            ref="currentComponent"/>
             <MeetupDescription v-if="currentStep === 3" 
-                            @stepUpdated="mergeStepData"/>
+                            @stepUpdated="mergeStepData"
+                            ref="currentComponent"/>
             <MeetupConfirmation v-if="currentStep === 4" :meetupToCreate="form" />
         </keep-alive>
 
@@ -69,6 +72,10 @@ export default {
         },
         moveToNextStep(){
             this.currentStep++
+            this.$nextTick(() => {
+                this.canProceed = !this.$refs['currentComponent'].$v.$invalid
+            })
+            
             
         },
         moveToPreviusStep(){
