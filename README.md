@@ -3,8 +3,8 @@
 - https://ingesoft2666310998.wordpress.com
 # Link proyecto red
 http://192.168.0.4:8080
-# Link desliegue
-http://35.224.222.219:8080
+# Link despliegue
+http://35.238.232.228:8080/
 
 # Como correr el proyecto en local
 Se hace la respectiva instalación de la carpeta donde esta alojada el proyecto vue-meetup con el comando $ npm install
