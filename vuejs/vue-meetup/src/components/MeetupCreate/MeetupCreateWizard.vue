@@ -19,7 +19,7 @@
                     :disabled="!canProceed" 
                     class="button is-primary">Siguiente</button>
             <button v-else
-                    @click="moveToNextStep" class="button is-primary">Confirmar</button>        
+                    @click="emitMeetupConfirm" class="button is-primary">Confirmar</button>        
         </div>
         <pre><code>{{form}}</code></pre>
     </div>
@@ -83,6 +83,9 @@ export default {
       moveToPreviousStep () {
         this.currentStep--
         this.canProceed = true
+      },
+      emitMeetupConfirm () {
+        this.$emit('meetupConfirmed', this.form)
       }
     }
   }
