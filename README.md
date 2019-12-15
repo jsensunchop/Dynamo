@@ -11,5 +11,5 @@ se hace la respectiva instalacion de la carpeta donde esta alojada el proyecto v
 se procede a inicializar el servidor y desplegar la aplicacion localmente con "npm run serve" 
 y en otra terminal en la carpeta vue-meetup/server usamos "node index.js" de la siguiente manera:
 
-![run_example](run_project.gif)
+![run_project.gif](run_project.gif)
 
