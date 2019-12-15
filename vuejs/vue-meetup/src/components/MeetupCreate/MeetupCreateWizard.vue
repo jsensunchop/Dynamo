@@ -18,6 +18,7 @@
             <button v-if="currentStep !== 1"
                     @click="moveToPreviousStep" class="button is-primary m-r-sm">Atras</button>
             <button v-if="currentStep !== allStepsCount"
+                    :disabled="!canProceed"
                     @click="moveToNextStep" class="button is-primary">Siguiente</button>
             <button v-else
                     @click="moveToNextStep" class="button is-primary">Confirmar</button>        
@@ -42,6 +43,7 @@ export default {
         return{
             currentStep: 1,
             allStepsCount: 4,
+            canProceed: false,
             form: {
                 location: null,
                 title: null,
@@ -61,14 +63,17 @@ export default {
         }
     },
     methods: {
-        mergeStepData(stepData){
-            this.form = {...this.form, ...stepData}    
+        mergeStepData(step){
+            this.form = {...this.form, ...stepData}
+            this.canProceed = step.isValid    
         },
         moveToNextStep(){
             this.currentStep++
+            
         },
         moveToPreviusStep(){
             this.currentStep--
+            this.canProceed = true
         }
     }
 }
