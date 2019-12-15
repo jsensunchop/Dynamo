@@ -12,4 +12,5 @@ se procede a inicializar el servidor y desplegar la aplicacion localmente con $ 
 y en otra terminal en la carpeta vue-meetup/server usamos $ node index.js de la siguiente manera:
 
 ![](run_project.gif)
-
+# Documento Devops y Cloud Pattern Utilizado
+https://docs.google.com/document/d/1Fyc9mylEMw41H5KKnXEoruAS-njT07Fx7F25MNoZSyU/edit?usp=sharing
