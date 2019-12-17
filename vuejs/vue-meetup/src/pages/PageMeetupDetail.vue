@@ -89,6 +89,10 @@
               <button v-if="!isAuthenticated"
                       :disabled="true"
                       class="button is-warning">Necesitas registrarte para acceder</button>
+              <ThreadCreateModal v-if="isMember || isMeetuperOwner"
+                                 @threadSubmitted="createThread"
+                                 :btnTitle="`Bienvenido ${authUser.username}, comienza un nuevo post`"
+                                 :title="'Crear Post'"/>
             </div>
             <!-- Thread List START -->
             <div class="content is-medium">
@@ -140,11 +144,16 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import ThreadCreateModal from '@/components/ThreadCreateModal'
   export default {
+    components: {
+      ThreadCreateModal
+    },
     computed: {
       ...mapState({
         meetup: state => state.meetups.item,
-        threads: state => state.threads.items
+        threads: state => state.threads.items,
+        authUser: state => state.auth.user
       }),
       meetupCreator () {
         return this.meetup.meetupCreator || {}
@@ -171,12 +180,16 @@
     },
     methods: {
       ...mapActions('meetups', ['fetchMeetupById']),
-       ...mapActions('threads', ['fetchThreads']),
+       ...mapActions('threads', ['fetchThreads', 'postThread']),
       joinMeetup () {
         this.$store.dispatch('meetups/joinMeetup', this.meetup._id)
       },
       leaveMeetup () {
         this.$store.dispatch('meetups/leaveMeetup', this.meetup._id)
+      },
+      createThread ({title, done}){
+        this.postThread({title, meetupId: this.meetup._id})
+        done()
       }
     }
   }
