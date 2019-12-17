@@ -150,14 +150,22 @@
       this.fetchMeetupById(meetupId)
       this.fetchThreads(meetupId)
 
-      this.$root.socket.on('meetup/postPublished', function(post) {
-        alert(post.text)
-        console.log(post.text)
-      })
+      if(this.isAuthenticated) {
+        this.$socket.emit('meetup/suscribe', meetupId)
+        this.$socket.on('meetup/postPublished', this.addPostToThreadHandler)
+        //this.$socket.on('meetup/postPublished', (post) => this.addPostToThread({post, threadId: post.thread}))
+      }
+    },
+    destroyed () {
+      this.$socket.removeListener('meetup/postPublished', this.addPostToThreadHandler)
+      this.$socket.emit('meetup/unsubscribe', this.meetup._id)
     },
     methods: {
       ...mapActions('meetups', ['fetchMeetupById']),
-       ...mapActions('threads', ['fetchThreads', 'postThread']),
+       ...mapActions('threads', ['fetchThreads', 'postThread', 'addPostToThread']),
+      addPostToThreadHandler (post) {
+        this.addPostToThreadHandler({post, threadId: post.thread})
+      },
       joinMeetup () {
         this.$store.dispatch('meetups/joinMeetup', this.meetup._id)
       },
