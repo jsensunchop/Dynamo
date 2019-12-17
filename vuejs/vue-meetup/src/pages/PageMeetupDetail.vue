@@ -26,7 +26,7 @@
         </div>
         <div class="is-pulled-right">
           <!-- We will handle this later (: -->
-          <button class="button is-danger">Dejar reunion</button>
+          <button v-if="isMember" class="button is-danger">Abandonar la reunión</button>
         </div>
       </div>
     </section>
@@ -82,10 +82,11 @@
               <h3 class="title is-3">Acerca de la reunion</h3>
               <p>{{meetup.description}}</p>
               <!-- Join Meetup, We will handle it later (: -->
-              <button class="button is-primary">¡Deseo unirme!</button>
+              <button v-if="canJoin" class="button is-primary">¡Deseo unirme!</button>
               <!-- Not logged In Case, handle it later (: -->
-              <!-- <button :disabled="true"
-                      class="button is-warning">You need authenticate in order to join</button> -->
+              <button v-if="isAuthenticated"
+                      :disabled="true"
+                      class="button is-warning">Necesitas autenticarte para poder unirte!</button>
             </div>
             <!-- Thread List START -->
             <div class="content is-medium">
@@ -145,8 +146,22 @@
       }),
       meetupCreator () {
         return this.meetup.meetupCreator || {}
+      },
+      isAuthenticated (){
+        return this.$store.getters['auth/isAuthenticated']
+      },
+      isMeetupOwner (){
+        return this.$store.getters['auth/isMeetupOwner'](this.meetupCreator._id)
+      },
+      isMember (){
+        return this.$store.getters['auth/isMember'](this.meetup._id)
+      },
+      canJoin (){
+        return !this.isMeetupOwner &&
+                this.isAuthenticated &&
+                !this.isMember
       }
-    },
+    },  
     created () {
       const meetupId = this.$route.params.id
       this.fetchMeetupById(meetupId)
@@ -154,7 +169,10 @@
     },
     methods: {
       ...mapActions('meetups', ['fetchMeetupById']),
-      ...mapActions('threads', ['fetchThreads'])
+      ...mapActions('threads', ['fetchThreads']),
+      joinMeetup(){
+        
+      }
     }
   }
 </script>
