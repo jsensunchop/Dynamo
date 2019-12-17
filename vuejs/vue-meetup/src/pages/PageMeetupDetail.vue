@@ -149,21 +149,21 @@
       meetupCreator () {
         return this.meetup.meetupCreator || {}
       },
-      isAuthenticated (){
+      isAuthenticated () {
         return this.$store.getters['auth/isAuthenticated']
       },
-      isMeetupOwner (){
+      isMeetupOwner () {
         return this.$store.getters['auth/isMeetupOwner'](this.meetupCreator._id)
       },
-      isMember (){
+      isMember () {
         return this.$store.getters['auth/isMember'](this.meetup._id)
       },
-      canJoin (){
+      canJoin () {
         return !this.isMeetupOwner &&
                 this.isAuthenticated &&
-                !this.isMember
+               !this.isMember
       }
-    },  
+    },
     created () {
       const meetupId = this.$route.params.id
       this.fetchMeetupById(meetupId)
@@ -172,13 +172,12 @@
     methods: {
       ...mapActions('meetups', ['fetchMeetupById']),
       ...mapActions('threads', ['fetchThreads']),
-      joinMeetup(){
-        this.$store.dispatch('meetups/joinMeetup', this.meetup_id)
+      joinMeetup () {
+        this.$store.dispatch('meetups/joinMeetup', this.meetup._id)
       }
     }
   }
 </script>
-
 <style scoped lang="scss">
   .tag.is-warning {
     opacity: 0.5;
@@ -275,7 +274,7 @@
     margin-right: 15px;
   }
   .post-item {
-    
+
   }
 
   .media + .media {

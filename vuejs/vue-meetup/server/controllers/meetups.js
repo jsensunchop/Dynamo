@@ -1,7 +1,8 @@
 const Meetup = require('../models/meetups');
+const User = require('../models/users');
 
-exports.getSecret = function(req, res) {
-  return res.json({secret: 'I am a secret message'})
+exports.getSecret = function (req, res) {
+  return res.json({secret: 'I am secret Message'})
 }
 
 exports.getMeetups = function(req, res) {
@@ -52,7 +53,6 @@ exports.createMeetup = function(req, res) {
   })
 }
 
-
 exports.joinMeetup = function (req, res) {
   const user = req.user;
   const {id} = req.params;
@@ -83,3 +83,6 @@ exports.leaveMeetup = function (req, res) {
     .then(result => res.json({id}))
     .catch(errors => res.status(422).send({errors}))
 }
+
+
+
