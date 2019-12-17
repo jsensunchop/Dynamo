@@ -39,6 +39,12 @@ Vue.filter('formatDate', function (value, formatType = 'LL'){
   return ''
 })
 
+Vue.filter('fromNow', function(value) {
+  if(!value) return ''
+
+  return moment(value).fromNow()
+})
+
 //const socket = io('http://localhost:3001')
 
 new Vue({
