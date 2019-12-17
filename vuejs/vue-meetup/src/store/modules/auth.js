@@ -35,7 +35,7 @@ export default {
              state.user['joinedMeetups'] &&
              state.user['joinedMeetups'].includes(meetupId)
     }
-      
+
   },
   actions: {
     loginWithEmailAndPassword ({commit}, userData) {
@@ -94,6 +94,10 @@ export default {
           commit('setAuthState', true)
           return err
         })
+    },
+    addMeetupToAuthUser ({commit, state}, meetupId) {
+      const userMeetups = [...state.user['joinedMeetup'], meetupId]
+      commit('setMeetupsToAuthUser', userMeetups)
     }
   },
   mutations: {
@@ -102,6 +106,9 @@ export default {
     },
     setAuthState (state, authState) {
       return state.isAuthResolved = authState
+    },
+    setMeetupsToAuthUser (state, meetups) {
+      return Vue.set(state.user, 'joinedMeetups', meetups)
     }
   }
 }

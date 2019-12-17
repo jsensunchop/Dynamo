@@ -171,7 +171,7 @@
       ...mapActions('meetups', ['fetchMeetupById']),
       ...mapActions('threads', ['fetchThreads']),
       joinMeetup(){
-        
+        this.$store.dispatch('meetups/joinMeetup', this.meetup_id)
       }
     }
   }
