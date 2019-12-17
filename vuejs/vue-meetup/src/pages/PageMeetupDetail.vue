@@ -195,8 +195,10 @@
       },
       createThread ({title, done}){
         this.postThread({title, meetupId: this.meetup._id})
-          .then(()=> done())
-        done()
+          .then(() => {
+            this.$toasted.success('Thread Succesfuly Created!', {duration: 3000})
+            done()
+        })
       }
     }
   }
