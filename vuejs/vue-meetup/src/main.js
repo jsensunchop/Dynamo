@@ -37,9 +37,14 @@ Vue.filter('formatDate', function (value, formatType = 'LL'){
   return ''
 })
 
-io('http://localhost:3001')
+const socket = io('http://localhost:3001')
 
 new Vue({
+  data (){
+    return {
+      socket
+    }
+  },
   router,
   store,
   vuelidate,
