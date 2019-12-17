@@ -11,6 +11,7 @@ import AppHero from './components/shared/AppHero'
 import AppSpinner from './components/shared/AppSpinner'
 
 import moment from 'moment'
+import customPlugin from '@/plugins/customPlugin'
 
 Vue.config.productionTip = false
 
@@ -20,6 +21,7 @@ Vue.component('AppSpinner', AppSpinner)
 
 Vue.use(vuelidate)
 Vue.use(Toasted)
+Vue.use(customPlugin)
 
 
 
