@@ -15,7 +15,7 @@
               <span class="title is-bold">{{user.name}}</span>
               <br/>
               <!-- Here will be user update functionality -->
-              <button class="button is-primary is-outlined m-t-sm">Actualizar Información</button>
+              <UserUpdateModal :authUser="user" @userSubmitted="updateUser" />
               <br/>
             </p>
             <!-- TODO: User info Here if any -->
@@ -136,8 +136,12 @@
 </template>
 
 <script>
+  import UserUpdateModal from '@/components/UserUpdateModal'
   import { mapState } from 'vuex'
   export default {
+    components: {
+      UserUpdateModal
+    },
     data () {
         return {
             activeTab: 'meetups'
@@ -157,6 +161,19 @@
     created () {
       this.$store.dispatch('stats/fetchUserStats')
         .then(stats => console.log(stats))
+    },
+    methods: {
+      updateUser ({user, done}) {
+        this.$store.dispatch('auth/updateUser', user)
+          .then(() => {
+            this.$toasted.success('Profile Successfuly Updated', {duration: 3000})
+            done()
+          })
+          .catch(err => {
+            console.log(err)
+            done()
+          })
+      }
     }
   }
 </script>
