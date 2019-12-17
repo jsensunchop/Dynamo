@@ -16,8 +16,8 @@ exports.getPosts = function(req, res) {
   });
 }
 
-exports.createPosts = function(req, res) {
-  const postdata = req.body;
+exports.createPost = function(req, res) {
+  const postData = req.body
   const post = new Post(postData)
   post.user = req.user
 
@@ -26,7 +26,7 @@ exports.createPosts = function(req, res) {
       return res.status(422).send({errors});
     }
 
-    Thread.update({_id: createdPost.thread }, { $push: { posts: createdPost}}, ()=> {})
+    Thread.update({ _id: createdPost.thread }, { $push: { posts: createdPost }}, () => {})
     return res.json(createdPost)
   });
 }

@@ -5,6 +5,6 @@ const PostsCtrl = require('../controllers/posts');
 const AuthCtrl = require('../controllers/auth');
 
 router.get('', PostsCtrl.getPosts);
-router.post('', AuthCtrl.onlyAuthUser, PostsCtrl.createPosts);
+router.post('', AuthCtrl.onlyAuthUser, PostsCtrl.createPost);
 
 module.exports = router;
