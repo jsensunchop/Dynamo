@@ -4,6 +4,7 @@ import router from './router'
 import vuelidate from 'vuelidate'
 import store from './store'
 import Toasted from 'vue-toasted'
+import io from 'socket.io-client'
 
 import AppDropdown from './components/shared/AppDropdown'
 import AppHero from './components/shared/AppHero'
@@ -21,6 +22,7 @@ Vue.use(vuelidate)
 Vue.use(Toasted)
 
 
+
 Vue.filter('capitalize', function (value){
   if(value && typeof value === 'string') {
     return value.charAt(0).toUpperCase() + value.slice(1)
@@ -34,6 +36,8 @@ Vue.filter('formatDate', function (value, formatType = 'LL'){
   
   return ''
 })
+
+io('http://localhost:3001')
 
 new Vue({
   router,
