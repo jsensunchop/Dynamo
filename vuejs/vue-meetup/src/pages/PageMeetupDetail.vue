@@ -26,7 +26,9 @@
         </div>
         <div class="is-pulled-right">
           <!-- We will handle this later (: -->
-          <button v-if="isMember" class="button is-danger">Abandonar la reunión</button>
+          <button v-if="isMember" 
+                  @click="leaveMeetup"
+                  class="button is-danger">Abandonar la reunión</button>
         </div>
       </div>
     </section>
@@ -79,20 +81,18 @@
           </div>
           <div class="column is-7 is-offset-1">
             <div class="content is-medium">
-              <h3 class="title is-3">Acerca de la reunion</h3>
+              <h3 class="title is-3">Acerca de la reunión</h3>
               <p>{{meetup.description}}</p>
-              <!-- Join Meetup, We will handle it later (: -->
-              <button v-if="canJoin" 
-                      @click="joinMeetup" 
-                      class="button is-primary">¡Deseo unirme!</button>
-              <!-- Not logged In Case, handle it later (: -->
-              <button v-if="isAuthenticated"
+              <button v-if="canJoin"
+                      @click="joinMeetup"
+                      class="button is-primary">Unirse</button>
+              <button v-if="!isAuthenticated"
                       :disabled="true"
-                      class="button is-warning">Necesitas autenticarte para poder unirte!</button>
+                      class="button is-warning">You need authenticate in order to join</button>
             </div>
             <!-- Thread List START -->
             <div class="content is-medium">
-              <h3 class="title is-3">Posts</h3>
+              <h3 class="title is-3">Threads</h3>
               <div v-for="thread in threads" :key="thread._id" class="box">
                 <!-- Thread title -->
                 <h4 id="const" class="title is-3">{{thread.title}}</h4>
@@ -171,9 +171,12 @@
     },
     methods: {
       ...mapActions('meetups', ['fetchMeetupById']),
-      ...mapActions('threads', ['fetchThreads']),
+       ...mapActions('threads', ['fetchThreads']),
       joinMeetup () {
         this.$store.dispatch('meetups/joinMeetup', this.meetup._id)
+      },
+      leaveMeetup () {
+        this.$store.dispatch('meetups/leaveMeetup', this.meetup._id)
       }
     }
   }
