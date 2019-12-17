@@ -88,7 +88,7 @@
                       class="button is-primary">Unirse</button>
               <button v-if="!isAuthenticated"
                       :disabled="true"
-                      class="button is-warning">You need authenticate in order to join</button>
+                      class="button is-warning">Necesitas registrarte para acceder</button>
             </div>
             <!-- Thread List START -->
             <div class="content is-medium">
