@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
 import axiosInstance from '@/services/axios'
@@ -96,7 +97,7 @@ export default {
         })
     },
     addMeetupToAuthUser ({commit, state}, meetupId) {
-      const userMeetups = [...state.user['joinedMeetup'], meetupId]
+      const userMeetups = [...state.user['joinedMeetups'], meetupId]
       commit('setMeetupsToAuthUser', userMeetups)
     }
   },

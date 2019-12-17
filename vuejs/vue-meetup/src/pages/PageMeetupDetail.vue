@@ -82,7 +82,9 @@
               <h3 class="title is-3">Acerca de la reunion</h3>
               <p>{{meetup.description}}</p>
               <!-- Join Meetup, We will handle it later (: -->
-              <button v-if="canJoin" class="button is-primary">¡Deseo unirme!</button>
+              <button v-if="canJoin" 
+                      @click="joinMeetup" 
+                      class="button is-primary">¡Deseo unirme!</button>
               <!-- Not logged In Case, handle it later (: -->
               <button v-if="isAuthenticated"
                       :disabled="true"
@@ -273,7 +275,9 @@
     margin-right: 15px;
   }
   .post-item {
+    
   }
+
   .media + .media {
     border: none;
     margin-top: 0;
