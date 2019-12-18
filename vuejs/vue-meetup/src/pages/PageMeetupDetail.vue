@@ -26,7 +26,9 @@
         </div>
         <div class="is-pulled-right">
           <!-- We will handle this later (: -->
-          <button class="button is-danger">Dejar reunion</button>
+          <button v-if="isMember" 
+                  @click="leaveMeetup"
+                  class="button is-danger">Abandonar la reunión</button>
         </div>
       </div>
     </section>
@@ -61,7 +63,7 @@
                 Posts
               </p>
               <ul>
-                <li v-for="thread in threads" :key="thread._id">{{thread.title}}</li>
+                <li v-for="thread in orderedThreads" :key="thread._id">{{thread.title}}</li>
               </ul>
               <p class="menu-label">
                 Lista de participantes
@@ -79,55 +81,21 @@
           </div>
           <div class="column is-7 is-offset-1">
             <div class="content is-medium">
-              <h3 class="title is-3">Acerca de la reunion</h3>
+              <h3 class="title is-3">Acerca de la reunión</h3>
               <p>{{meetup.description}}</p>
-              <!-- Join Meetup, We will handle it later (: -->
-              <button class="button is-primary">¡Deseo unirme!</button>
-              <!-- Not logged In Case, handle it later (: -->
-              <!-- <button :disabled="true"
-                      class="button is-warning">You need authenticate in order to join</button> -->
+              <button v-if="canJoin"
+                      @click="joinMeetup"
+                      class="button is-primary">Unirse</button>
+              <button v-if="!isAuthenticated"
+                      :disabled="true"
+                      class="button is-warning">Necesitas registrarte para acceder</button>
+              <ThreadCreateModal v-if="isMember || isMeetuperOwner"
+                                 @threadSubmitted="createThread"
+                                 :btnTitle="`Bienvenido ${authUser.username}, comienza un nuevo post`"
+                                 :title="'Crear Post'"/>
             </div>
-            <!-- Thread List START -->
-            <div class="content is-medium">
-              <h3 class="title is-3">Posts</h3>
-              <div v-for="thread in threads" :key="thread._id" class="box">
-                <!-- Thread title -->
-                <h4 id="const" class="title is-3">{{thread.title}}</h4>
-                <!-- Create new post, handle later -->
-                <form class="post-create">
-                  <div class="field">
-                    <textarea class="textarea textarea-post"
-                              placeholder="Write a post"
-                              rows="1"></textarea>
-                    <button :disabled="true" class="button is-primary m-t-sm">Enviar</button>
-                  </div>
-                </form>
-                <!-- Create new post END, handle later -->
-                <!-- Posts START -->
-                <article v-for="post in thread.posts" :key="post._id" class="media post-item">
-                  <figure class="media-left is-rounded user-image">
-                    <p class="image is-32x32">
-                      <img class="is-rounded" :src="post.user.avatar">
-                    </p>
-                  </figure>
-                  <div class="media-content">
-                    <div class="content is-medium">
-                      <div class="post-content">
-                        <!-- Post User Name -->
-                        <strong class="author">{{post.user.name}}</strong>
-                        {{' '}}
-                        <!-- Post Updated at -->
-                        <small class="post-time">{{post.updatedAt | formatDate('LLL')}}</small>
-                        <br>
-                        <p class="post-content-message">{{post.text}}</p>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-                <!-- Posts END -->
-              </div>
-            </div>
-            <!-- Thread List END -->
+            <ThreadList :threads="orderedThreads"
+                        :canMakePost="canMakePost" />
           </div>
         </div>
       </div>
@@ -137,28 +105,83 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import ThreadCreateModal from '@/components/ThreadCreateModal'
+  import ThreadList from '@/components/ThreadList'
   export default {
+    components: {
+      ThreadCreateModal,
+      ThreadList
+    },
     computed: {
       ...mapState({
         meetup: state => state.meetups.item,
-        threads: state => state.threads.items
+        threads: state => state.threads.items,
+        authUser: state => state.auth.user
       }),
       meetupCreator () {
         return this.meetup.meetupCreator || {}
+      },
+      isAuthenticated () {
+        return this.$store.getters['auth/isAuthenticated']
+      },
+      isMeetupOwner () {
+        return this.$store.getters['auth/isMeetupOwner'](this.meetupCreator._id)
+      },
+      isMember () {
+        return this.$store.getters['auth/isMember'](this.meetup._id)
+      },
+      canJoin () {
+        return !this.isMeetupOwner &&
+                this.isAuthenticated &&
+               !this.isMember
+      },
+      canMakePost () {
+        return this.isAuthenticated && (this.isMember || this.isMeetupOwner)
+      },
+      orderedThreads () {
+        const copyOfThreads = [...this.threads]
+        return copyOfThreads.sort((thread, nextThread) => {
+          return new Date(nextThread.createdAt) - new Date(thread.createdAt)
+        })
       }
     },
     created () {
       const meetupId = this.$route.params.id
       this.fetchMeetupById(meetupId)
       this.fetchThreads(meetupId)
+
+      if(this.isAuthenticated) {
+        this.$socket.emit('meetup/suscribe', meetupId)
+        this.$socket.on('meetup/postPublished', this.addPostToThreadHandler)
+        //this.$socket.on('meetup/postPublished', (post) => this.addPostToThread({post, threadId: post.thread}))
+      }
+    },
+    destroyed () {
+      this.$socket.removeListener('meetup/postPublished', this.addPostToThreadHandler)
+      this.$socket.emit('meetup/unsubscribe', this.meetup._id)
     },
     methods: {
       ...mapActions('meetups', ['fetchMeetupById']),
-      ...mapActions('threads', ['fetchThreads'])
+       ...mapActions('threads', ['fetchThreads', 'postThread', 'addPostToThread']),
+      addPostToThreadHandler (post) {
+        this.addPostToThreadHandler({post, threadId: post.thread})
+      },
+      joinMeetup () {
+        this.$store.dispatch('meetups/joinMeetup', this.meetup._id)
+      },
+      leaveMeetup () {
+        this.$store.dispatch('meetups/leaveMeetup', this.meetup._id)
+      },
+      createThread ({title, done}){
+        this.postThread({title, meetupId: this.meetup._id})
+          .then(() => {
+            this.$toasted.success('Post Creado', {duration: 3000})
+            done()
+        })
+      }
     }
   }
 </script>
-
 <style scoped lang="scss">
   .tag.is-warning {
     opacity: 0.5;
@@ -229,48 +252,4 @@
     margin: inherit;
   }
   .footer {background-color: white;}
-  // Post Create Input START
-  .textarea-post {
-    padding-bottom: 30px;
-  }
-  .post-create {
-    margin-bottom: 15px;
-  }
-  // Post Create END
-  // Thread List START
-  .content {
-    figure {
-      margin-bottom: 0;
-    }
-  }
-  .media-content-threads {
-    background-color: #f1f1f1;
-    padding: 3px 20px;
-    border-radius: 10px;
-    margin-right: 40px;
-    width: 100px;
-  }
-  .media-left.user-image {
-    margin: 0;
-    margin-right: 15px;
-  }
-  .post-item {
-  }
-  .media + .media {
-    border: none;
-    margin-top: 0;
-  }
-  .post-content {
-    margin: 0;
-    &-message {
-      font-size: 16px;
-    }
-    .author {
-      font-size: 18px;
-    }
-    .post-time {
-      font-size: 16px;
-    }
-  }
-  // Thread List END
 </style>

@@ -49,9 +49,9 @@
             Cuenta
           </a>
           <div class="navbar-dropdown">
-            <a href="#" class="navbar-item">
+            <router-link :to="{name: 'PageProfile'}" class="navbar-item">
               Perfil
-            </a>
+            </router-link>
             <hr class="navbar-divider">
             <a @click.prevent="logout" class="navbar-item">
               Cerrar Sesion
@@ -84,6 +84,9 @@
     methods: {
       logout(){
         this.$store.dispatch('auth/logout')
+        .then(() => {
+          this.$router.push('/')
+        })
       }
     }
   }
